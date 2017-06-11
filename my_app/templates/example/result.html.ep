@@ -1,11 +1,11 @@
 % layout 'default';
-% title 'index';
+% title 'result';
+<h1>result</h1>
 <center>
-
-    %= form_for '/' => method => 'POST' => begin
+    <h1><%= $msg %></h1>	
+    %= form_for "/result" => method => 'POST' => begin
     %= text_field 'word'
     %= submit_button 'go'
     % end
 </center>
 <p align = "right"><%= link_to 'reload' => url_for %></p>
-<p align = "right"><%= link_to 'result' => url_for %></p>

@@ -1,4 +1,4 @@
-package MyApp::controller::example;
+package MyApp::Controller::Example;
 use Mojo::Base 'Mojolicious::Controller';
 use Text::MeCab;
 use Data::Dumper;
@@ -24,18 +24,19 @@ sub index {
 
 sub result{
 	my $c = shift;
-	my $m = Text::MeCab->new();
-	my $str = $c->param('word');
-	my $n = $m->parse($str);
-	do {
-		printf("%s\t%s\t%d\n",
-			$n->surface,
-			$n->feature,
-			$n->cost
-		);
-	}while($n = $n->next);
-	
-	$c->redirect_to('/result');
+	$c->render(msg => '形態素解析');
+#	my $m = Text::MeCab->new();
+#	my $str = $c->param('word');
+#	my $n = $m->parse($str);
+#	do {
+#		printf("%s\t%s\t%d\n",
+#			$n->surface,
+#			$n->feature,
+#			$n->cost
+#		);
+#	}while($n = $n->next);
+#	
+#	$c->redirect_to('/result');
 } 
    
 1;

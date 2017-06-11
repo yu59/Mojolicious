@@ -14,11 +14,11 @@ sub startup {
 
   # Router
   my $r = $self->routes;
-  $r->post('/')->to('html#result');
+  $r->post('/')->to('example#result');
 
   # Normal route to controller
   $r->get('/')->to('example#index');
-  $r->get('/result')->to('html#result');
+  $r->get('/result')->to('example#result');
 }
 
 1;
