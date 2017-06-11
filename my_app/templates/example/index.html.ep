@@ -1,0 +1,14 @@
+% layout 'default';
+% title 'index';
+<center>
+	<h1><%= $msg %></h1>
+	
+	%= form_for '/' => method => 'POST' => begin
+	%= text_field 'word'
+	%= submit_button 'go'
+	% end
+</center>
+<p align = "right"><%= link_to 'reload' => url_for %></p> 
+<p align = "right"><%= link_to 'result' => url_for %></p> 
+
+

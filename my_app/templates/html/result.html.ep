@@ -1,0 +1,10 @@
+% layout 'default';
+% title 'result';
+<h1>result</h1>
+<center>
+    %= form_for "/result" => method => 'POST' => begin
+    %= text_field 'word'
+    %= submit_button 'go'
+    % end
+</center>
+<p align = "right"><%= link_to 'reload' => url_for %></p>
