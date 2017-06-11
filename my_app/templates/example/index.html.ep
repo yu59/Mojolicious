@@ -4,9 +4,14 @@
 	<h1><%= $msg %></h1>
 	
 	%= form_for '/' => method => 'POST' => begin
-	%= text_field 'word'
-	%= submit_button 'go'
+		%= text_field 'word'
+		%= submit_button 'go'
 	% end
+	<%= $analysis %>
+	%# for my $words (@words){
+		%# <%= $words %>
+		<Hr>
+	%# } 
 </center>
 <p align = "right"><%= link_to 'reload' => url_for %></p> 
 <p align = "right"><%= link_to 'result' => url_for %></p> 

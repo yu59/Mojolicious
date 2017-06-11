@@ -14,7 +14,7 @@ sub startup {
 
   # Router
   my $r = $self->routes;
-  $r->post('/')->to('example#result');
+  $r->post('/')->to('example#index');
 
   # Normal route to controller
   $r->get('/')->to('example#index');
