@@ -14,7 +14,6 @@ sub index {
 	# html の text_field から値を取ってくる
 	my $str = $c->param('word');
 	my $n = $m->parse($str);
-
 	my $surface;
 	my $feature;
 	my $info;
@@ -26,7 +25,8 @@ sub index {
 	my $href = $sth->fetchrow_hashref;
 	my $num = $href;
 	$num->{max}++;
-	print Dumper $num->{max};	
+#	print Dumper $num->{max};	
+
 
 	do {
 		# 解析結果を$infoに文字列結合していく
@@ -43,7 +43,7 @@ sub index {
 
 
 		# 解析結果をログとして出力
-		printf "%s\t%s\n", $n->surface, $n->feature;
+		# printf "%s\t%s\n", $n->surface, $n->feature;
 
 
 		# database に格納
@@ -58,22 +58,23 @@ sub index {
 
 	}while($n = $n->next);
 
-	# database から全て取ってきて@resultに格納
-	$sth = $dbh->prepare("select words, result, group_id from result");	
-	$sth->execute;
+	# database からデータを取ってきて@resultに格納
+	$sth = $dbh->prepare("select words, result, group_id from result where group_id = ?");	
+	$sth->execute($num->{max});
 	my @result = ();
 	while ( my $href = $sth->fetchrow_hashref) {
-		unshift @result, $href;
+		push @result, $href;
 	}
-	print Dumper @result;
+	# print Dumper @result;
 
 	# my $result = \@result;
 	# for (@{$result}){
 	#    printf $_->{words}; 
 	# };
+		$c->stash(result => \@result);
+	#	$c->stash(a => $surface);
 	
-	$c->stash(result => \@result);
-	$c->render(msg => '形態素解析', analysis => $info); # , result => \@result
+	$c->render(msg => '形態素解析', a => $surface); # , result => \@result
 }
 
 sub result{

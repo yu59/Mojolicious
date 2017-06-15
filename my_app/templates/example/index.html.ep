@@ -2,19 +2,22 @@
 % title 'index';
 <center>
 	<h1><%= $msg %></h1>
-	
+	<%= $a %>
 	%= form_for '/' => method => 'POST' => begin
 		%= text_field 'word'
 		%= submit_button 'go'
 	% end
-	<%= $analysis %>
+	</center>
+	<Hr>
 	% for (@{$result}){
-		<%= $_->{words} . "\t\t\t" .  $_->{result}%>
-		<Hr>
-	
+		<%= $_->{words} . "\t\t\t" .  $_->{result} %>
+		<br>
 	% } 
-<hr style="width:300px; height:10px; background-color:#ff9999;">
-</center>
+
+	%#<%= $info %>
+	<Hr>
+	
+%#<hr style="width:300px; height:10px; background-color:#ff9999;">
 <p align = "right"><%= link_to 'reload' => url_for %></p> 
 <p align = "right"><%= link_to 'result' => url_for %></p> 
 
