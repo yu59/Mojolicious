@@ -18,6 +18,7 @@ sub index {
 	my $feature;
 	my $info;
 	my $sth;
+	my @all;
 
 	# table の group_id の最大値を調べる
 	$sth = $dbh->prepare("select MAX(group_id) from result");	
@@ -46,7 +47,7 @@ sub index {
 		# printf "%s\t%s\n", $n->surface, $n->feature;
 
 
-		# database に格納
+		# 解析結果をdatabase に格納
 		$sth = $dbh->prepare(
 		" 
 			insert into result (words, result, create_timestamp, group_id)
@@ -58,7 +59,7 @@ sub index {
 
 	}while($n = $n->next);
 
-	# database からデータを取ってきて@resultに格納
+	# database から最後の解析結果を取ってきて@resultに格納
 	$sth = $dbh->prepare("select words, result, group_id from result where group_id = ?");	
 	$sth->execute($num->{max});
 	my @result = ();
@@ -71,9 +72,18 @@ sub index {
 	# for (@{$result}){
 	#    printf $_->{words}; 
 	# };
-		$c->stash(result => \@result);
-	#	$c->stash(a => $surface);
 	
+	# databaseから全ての解析結果を取ってきて@all に格納
+	$sth = $dbh->prepare("select words, result, group_id from result");	
+	$sth->execute();
+	while ( my $href = $sth->fetchrow_hashref) {
+		push @all, $href;
+	}
+
+	$c->stash(all => \@all);
+	$c->stash(result => \@result);
+	#	$c->stash(a => $surface);
+	print Dumper @all;
 	$c->render(msg => '形態素解析', a => $surface); # , result => \@result
 }
 

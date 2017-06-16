@@ -1,24 +1,51 @@
 % layout 'default';
 % title 'index';
 <center>
+	<p align = "right"><font size = "4"><%= link_to 'Reload' => url_for %></font></p> 
 	<h1><%= $msg %></h1>
 	<%= $a %>
 	%= form_for '/' => method => 'POST' => begin
 		%= text_field 'word'
 		%= submit_button 'go'
 	% end
-	</center>
-	<Hr>
-	% for (@{$result}){
-		<%= $_->{words} . "\t\t\t" .  $_->{result} %>
-		<br>
-	% } 
+</center>
+<Hr>
+<font size = "5">
+% for (@{$result}){
+	<%= $_->{words} %>
+% }
+</font>
+<br>
+% for (@{$result}){
+	<%= $_->{words} . "\t\t\t" .  $_->{result} %>
+	<br>
+% } 
 
-	%#<%= $info %>
-	<Hr>
+%#<%= $info %>
+<Hr>
+
+
+%## 過去の解析結果を折りたたんで表示
+<center><font size = "4">解析結果一覧</font></center>
+
+%## 折りたたみ追加 http://fukafuka295.jp/hp/hp_no10.html
+<div onclick="obj=document.getElementById('open').style; obj.display=(obj.display=='none')?'block':'none';">
+	<font color = "blue"><a style="cursor:pointer;">
+		% for (@{$all}) { 
+			<%= $_->{words} %>
+			% if ($_->{words} eq "") {
+				<br>
+			% }
+		% } 
+	</a></font>
+</div>
+<div id="open" style="display:none;clear:both;">
+	% for (@{$result}){
+		<%= $_->{words} . "\t\t\t" . $_->{result} %>
+		<br>
+	% }
+</div>
 	
 %#<hr style="width:300px; height:10px; background-color:#ff9999;">
-<p align = "right"><%= link_to 'reload' => url_for %></p> 
-<p align = "right"><%= link_to 'result' => url_for %></p> 
 
 
